@@ -1,4 +1,4 @@
-# miaguila-lib
+# miaguila_lib
 
 ## Logs
 Provides a logger for New Relic.
