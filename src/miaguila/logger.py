@@ -5,7 +5,7 @@ import json
 
 import requests
 
-from config.settings import settings
+from settings import settings
 
 class Logger:
     def __init__(self):

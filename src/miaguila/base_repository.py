@@ -1,8 +1,27 @@
 """ BaseRepository: Repository pattern ORM """
 from typing import Optional
-from sqlalchemy.orm.session import Session
 
-from config.settings import settings
+from sqlalchemy import create_engine
+from sqlalchemy.orm.session import Session
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
+from settings import settings
+
+
+def get_session():
+    """
+    Used for dependency injection in API.
+    """
+    engine = create_engine(settings.database.uri)
+    session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    session = session_local()
+    try:
+        yield session
+    finally:
+        session.close()
+
+Base = declarative_base()
 
 class BaseRepository:
     """

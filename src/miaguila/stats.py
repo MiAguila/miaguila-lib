@@ -6,8 +6,8 @@ import threading
 
 import newrelic.agent
 
-from config.settings import settings
-from logs.logger import Logger
+from settings import settings
+from logger import Logger
 from services.kinesis_service import kinesis_service
 
 logger = Logger()
