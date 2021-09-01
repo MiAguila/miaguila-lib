@@ -1,9 +1,10 @@
 [build-system]
 requires = [
     "boto3",
-    "dotenv",
+    "fastapi",
     "pydantic",
+    "python-dotenv",
     "requests",
-    "fastapi"
+    "setuptools"
 ]
 build-backend = "setuptools.build_meta"
