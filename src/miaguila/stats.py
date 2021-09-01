@@ -8,7 +8,6 @@ import newrelic.agent
 
 from settings import settings
 from logger import Logger
-from services.kinesis_service import kinesis_service
 
 logger = Logger()
 application = newrelic.agent.register_application()

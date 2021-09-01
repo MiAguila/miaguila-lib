@@ -7,8 +7,6 @@ import json
 
 import boto3
 
-from config.settings import settings
-
 class KinesisService():
     """
     Provides interfaces for kinesis.

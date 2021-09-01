@@ -6,8 +6,6 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from settings import settings
-
 
 def get_session():
     """

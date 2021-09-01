@@ -5,8 +5,6 @@ import json
 
 import requests
 
-from settings import settings
-
 class Logger:
     def __init__(self):
         self.log_url = settings.logger.new_relic_url
