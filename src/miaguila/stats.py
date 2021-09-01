@@ -6,8 +6,8 @@ import threading
 
 import newrelic.agent
 
-from settings import settings
-from logger import Logger
+from config.settings import settings
+from logging.logger import Logger
 
 logger = Logger()
 application = newrelic.agent.register_application()
