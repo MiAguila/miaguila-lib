@@ -7,9 +7,9 @@ import threading
 import newrelic.agent
 
 from miaguila.config.settings import settings
-from miaguila.logging.logger import Logger
+from miaguila.logging.logger import logger
+from miaguila.services.kinesis_service import kinesis_service
 
-logger = Logger()
 application = newrelic.agent.register_application()
 
 def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True):

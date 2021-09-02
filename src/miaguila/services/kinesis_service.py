@@ -7,6 +7,8 @@ import json
 
 import boto3
 
+from miaguila.config.settings import settings
+
 class KinesisService():
     """
     Provides interfaces for kinesis.

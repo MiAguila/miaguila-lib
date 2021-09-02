@@ -7,6 +7,7 @@ name = "pypi"
 newrelic = "*"
 pydantic = "*"
 requests = "*"
+boto3 = "*"
 
 [dev-packages]
 

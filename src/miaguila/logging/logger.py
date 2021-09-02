@@ -23,3 +23,5 @@ class Logger:
             )
         except requests.exceptions.ReadTimeout:
             pass
+
+logger = Logger()
