@@ -10,6 +10,11 @@ requests = "*"
 boto3 = "*"
 
 [dev-packages]
+pylint = "*"
+pylint-quotes = "*"
+pytest = "*"
+pytest-cov = "*"
+alchemy-mock = "*"
 
 [requires]
 python_version = "3.9"

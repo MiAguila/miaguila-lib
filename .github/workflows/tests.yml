@@ -1,0 +1,30 @@
+name: Tests
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches: [ develop, qa, main ]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set Environment Variables
+        uses: allenevans/set-env@v2.0.0
+        with:
+          overwrite: false
+          AWS_DEFAULT_REGION: us-east-1
+
+      - name: Install packages
+        run: pipenv install --dev --system
+
+      - name: Pylint validation
+        run: find . -type f | grep '.py$' | xargs pylint --extension-pkg-whitelist='pydantic' --jobs=0
+
+
+      - name: Tests validation
+        run: pytest --cov-config=.coveragec --cov=. tests/

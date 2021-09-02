@@ -1,0 +1,7 @@
+[run]
+branch = True
+omit = */__init__.py,env/**
+
+[report]
+fail_under = 97
+show_missing = true

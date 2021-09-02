@@ -25,10 +25,6 @@ def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True):
             logger.log(
                 {'message': 'error sending stat to New Relic',
                  'exception': exception})
-    if send_to_newrelic:
-        thread = threading.Thread(target=_send_to_newrelic)
-        thread.setDaemon(True)
-        thread.start()
     if send_to_kinesis:
         stat_name = f'{settings.app_name}.{name}'
         try:
@@ -37,3 +33,8 @@ def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True):
             logger.log(
                 {'message': 'error sending stat to Kinesis',
                  'exception': exception})
+
+    if send_to_newrelic:
+        thread = threading.Thread(target=_send_to_newrelic)
+        thread.setDaemon(True)
+        thread.start()

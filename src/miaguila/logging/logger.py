@@ -7,21 +7,29 @@ import requests
 
 from miaguila.config.settings import settings
 
-class Logger:
+class Logger: # pylint: disable=too-few-public-methods
+    """
+    A logger
+    """
     def __init__(self):
         self.log_url = settings.logger.new_relic_url
 
-    def log(self, message: str, data: dict) -> None:
-        # TO DO: batch logs, handle error levels
+    def log(self, message: str, data: dict=None) -> None:
+        """
+        Log to New Relic
+        """
+        if not data:
+            data = {}
+        # TO DO: batch logs, handle error levels, make async
         data['message'] = message
-        # a hack to simulate an asynch request, ignoring response
+        log_to_send = json.dumps([data])
         try:
             requests.post(
                 self.log_url,
-                data=json.dumps([data]),
-                timeout=0.0000000001
+                data=log_to_send
             )
-        except requests.exceptions.ReadTimeout:
-            pass
+        except Exception as err: # pylint: disable=broad-except
+            # since logger is down, print to stdout for debugging
+            print(err)
 
 logger = Logger()
