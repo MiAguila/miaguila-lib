@@ -6,8 +6,8 @@ import threading
 
 import newrelic.agent
 
-from config.settings import settings
-from logging.logger import Logger
+from miaguila.config.settings import settings
+from miaguila.logging.logger import Logger
 
 logger = Logger()
 application = newrelic.agent.register_application()

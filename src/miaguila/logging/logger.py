@@ -5,7 +5,7 @@ import json
 
 import requests
 
-from config.settings import settings
+from miaguila.config.settings import settings
 
 class Logger:
     def __init__(self):

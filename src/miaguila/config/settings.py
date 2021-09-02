@@ -34,7 +34,7 @@ class Settings(BaseSettings): # pylint: disable=too-few-public-methods
     """
     All settings
     """
-    app_name: os.getenv('APP_NAME', '')
+    app_name: str = os.getenv('APP_NAME', '')
     database: DatabaseSettings = DatabaseSettings()
     logger: LoggerSettings = LoggerSettings()
     aws: AWSSettings = AWSSettings()
