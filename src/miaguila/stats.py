@@ -21,17 +21,20 @@ def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True, newrelic_p
         try:
             kinesis_service.push(event=stat_name)
         except Exception as exception: # pylint: disable=broad-except
-            logger.log(
-                {'message': 'error sending stat to Kinesis',
-                 'exception': exception})
+            logger.log('error sending stat to Kinesis', 
+                data={'exception': exception}
+            )
 
     if send_to_newrelic:
         newrelic_params = newrelic_params or {}
         newrelic_params['application'] = settings.app_name
         application = newrelic.agent.application()
         try:
-            newrelic.agent.record_custom_event(stat_name, params=newrelic_params, application=application)
+            result = newrelic.agent.record_custom_event(stat_name, params=newrelic_params, application=application)
+            logger.log('sent stat to new relic', 
+                data={'result': result}
+            )
         except Exception as exception: # pylint: disable=broad-except
-            logger.log(
-                {'message': 'error sending stat to New Relic',
-                 'exception': exception})
+            logger.log('error sending stat to New Relic', 
+                data={'exception': exception}
+            )
