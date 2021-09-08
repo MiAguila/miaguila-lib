@@ -10,23 +10,14 @@ from miaguila.config.settings import settings
 from miaguila.logging.logger import logger
 from miaguila.services.kinesis_service import kinesis_service
 
-application = newrelic.agent.register_application()
-
-def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True):
+def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True, newrelic_params=None):
     """
     Increment a stat, only log exceptions rather than error
     """
-    def _send_to_newrelic():
-        # note: this doesn't work yet, talking to New Relic folks to confirm why
-        try:
-            stat_name = f'Custom/{settings.app_name}/{name}'
-            newrelic.agent.record_custom_metric(stat_name, 1, application=application)
-        except Exception as exception: # pylint: disable=broad-except
-            logger.log(
-                {'message': 'error sending stat to New Relic',
-                 'exception': exception})
+    stat_name = f'{settings.app_name}.{name}'
+
     if send_to_kinesis:
-        stat_name = f'{settings.app_name}.{name}'
+        
         try:
             kinesis_service.push(event=stat_name)
         except Exception as exception: # pylint: disable=broad-except
@@ -35,6 +26,12 @@ def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True):
                  'exception': exception})
 
     if send_to_newrelic:
-        thread = threading.Thread(target=_send_to_newrelic)
-        thread.setDaemon(True)
-        thread.start()
+        newrelic_params = newrelic_params or {}
+        newrelic_params['application'] = settings.app_name
+        application = newrelic.agent.application()
+        try:
+            newrelic.agent.record_custom_event(stat_name, params=newrelic_params, application=application)
+        except Exception as exception: # pylint: disable=broad-except
+            logger.log(
+                {'message': 'error sending stat to New Relic',
+                 'exception': exception})
