@@ -14,7 +14,7 @@ def increment_stat(name, send_to_newrelic=True, send_to_kinesis=True, newrelic_p
     """
     Increment a stat, only log exceptions rather than error
     """
-    stat_name = f'{settings.app_name}.{name}'
+    stat_name = f'{settings.app_name}_{name}'
 
     if send_to_kinesis:
         

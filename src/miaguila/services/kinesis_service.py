@@ -30,10 +30,6 @@ class KinesisService():  # pylint: disable=too-few-public-methods
         except UnknownServiceError:
             print('Please set environment variables.')
 
-    @staticmethod
-    def _generate_partition():
-        return datetime.now().strftime('%d-%m-%Y')
-
     def push(self, event: str):
         """
         Pushes data to kinesis.
@@ -43,11 +39,10 @@ class KinesisService():  # pylint: disable=too-few-public-methods
             return
         data = {
             'event': event,
-            'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M:%S'),
+            'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         }
         record = {
-            'Data': json.dumps(data).encode(),
-            'PartitionKey': str(hash(self._generate_partition()))
+            'Data': json.dumps(data).encode()
         }
         try:
             self._client.put_record(
